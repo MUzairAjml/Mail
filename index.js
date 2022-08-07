@@ -1,7 +1,7 @@
 import detect from "detect-port";
 import Email from "./mail.js";
 const port = 3000;
-
+let date;
 async function cron() {
   while (true) {
     detect(3000, async (err, _port) => {
@@ -10,8 +10,17 @@ async function cron() {
       }
 
       if (port == _port) {
-        console.log(`port: ${port} was not occupied Sending Mail`);
-        await Email.collectorStoped();
+        if (date) {
+          if (Date.now() - date > 900000) {
+            date = Date.now();
+            console.log(`port: ${port} was not occupied Sending Mail`);
+            await Email.collectorStoped();
+          } else {
+            date = Date.now();
+          }
+        } else {
+          date = Date.now();
+        }
       }
     });
     await sleep(900000);
