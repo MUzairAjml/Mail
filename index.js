@@ -11,7 +11,7 @@ async function cron() {
 
       if (port == _port) {
         if (date) {
-          if (Date.now() - date > 900000) {
+          if (Date.now() - date < 1000000) {
             date = Date.now();
             console.log(`port: ${port} was not occupied Sending Mail`);
             await Email.collectorStoped();
