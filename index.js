@@ -1,28 +1,18 @@
-import detect from "detect-port";
 import Email from "./mail.js";
-const port = 3000;
-let date;
+import axios from "axios";
+
 async function cron() {
   while (true) {
-    detect(3000, async (err, _port) => {
-      if (err) {
-        console.log(err);
-      }
-
-      if (port == _port) {
-        if (date) {
-          if (Date.now() - date < 1000000) {
-            date = Date.now();
-            console.log(`port: ${port} was not occupied Sending Mail`);
-            await Email.collectorStoped();
-          } else {
-            date = Date.now();
-          }
-        } else {
-          date = Date.now();
-        }
-      }
-    });
+    let res = await axios
+      .get("https://middlewareapi.loop.markets/v1/juno/blockDifference")
+      .catch((err) => {
+        return;
+      });
+    let blockDiff = res?.data.blocksDifference;
+    console.log(blockDiff);
+    if (blockDiff >= 300) {
+      await Email.collectorStoped();
+    }
     await sleep(900000);
   }
 }

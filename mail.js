@@ -31,8 +31,8 @@ async function collectorStoped() {
   const mailOptions = {
     from: "usama.zeeyou@gmail.com",
     to: "usama.zeeyou@gmail.com, zeeshanyousaf94@gmail.com, uzairajmal47@gmail.com",
-    subject: `Collector Stoped`,
-    html: `<h3>Hey Boss, this is your Bot.</h3>  <p> <h3>Collector just sotoped wokring, kindly restart the collector to sync the data with the chian </h3></p>`,
+    subject: `Sync Collector`,
+    html: `<h3>Hey Boss, this is your Bot.</h3>  <p> <h3>Collector is 300 blocks Behid, kindly Chekc & restart the collector to sync the data with the chian </h3></p>`,
   };
 
   smtpTransport.sendMail(mailOptions, (error, response) => {
