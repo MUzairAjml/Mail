@@ -38,9 +38,6 @@ async function poolDiff() {
       if (pool1Diff >= 100 || pool2Diff >= 100) {
         await Email.poolDifference(block, pool1Diff, pool2Diff);
       }
-    } else {
-      let date = new Date();
-      console.log(date.toString(), blockDiff);
     }
   }
 }
