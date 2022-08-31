@@ -70,7 +70,7 @@ async function poolDifference(block, pool1Diff, pool2Diff) {
   const mailOptions = {
     from: "usama.zeeyou@gmail.com",
     to: "usama.zeeyou@gmail.com, zeeshanyousaf94@gmail.com, uzairajmal47@gmail.com",
-    subject: `Sync Collector`,
+    subject: `Pool Difference`,
     html: `<h3>Hey Boss, this is your Bot.</h3>  <p> <h3>There is a difference in pool values at block # ${block}.<b> Pool 1 Difference : </b> ${pool1Diff} , <b> Pool 2 Difference : </b> ${pool2Diff}</h3></p>`,
   };
 

@@ -19,18 +19,29 @@ async function blockDiff() {
 async function poolDiff() {
   while (true) {
     let res = await axios
-      .get("https://middlewareapi.loop.markets/v1/juno/poolDifference")
+      .get("https://middlewareapi.loop.markets/v1/juno/blockDifference")
       .catch((err) => {
         return;
       });
-    let pool1Diff = res?.data.firstPoolDifference;
-    let pool2Diff = res?.data.secondPoolDifference;
-    let block = res?.data.currentBlock;
-    console.log("Pool1 Diff : ", pool1Diff, "Pool2 Diff : ", pool2Diff);
-    if (pool1Diff >= 100 || pool2Diff >= 100) {
-      await Email.poolDifference(block, pool1Diff, pool2Diff);
+    let blockDiff = res?.data.blocksDifference;
+    if (blockDiff == 0) {
+      let response = await axios
+        .get("https://middlewareapi.loop.markets/v1/juno/poolDifference")
+        .catch((err) => {
+          return;
+        });
+
+      let pool1Diff = response?.data.firstPoolDifference;
+      let pool2Diff = response?.data.secondPoolDifference;
+      let block = response?.data.currentBlock;
+      console.log("Pool1 Diff : ", pool1Diff, "Pool2 Diff : ", pool2Diff);
+      if (pool1Diff >= 100 || pool2Diff >= 100) {
+        await Email.poolDifference(block, pool1Diff, pool2Diff);
+      }
+    } else {
+      let date = new Date();
+      console.log(date.toString(), blockDiff);
     }
-    await sleep(60000);
   }
 }
 blockDiff();
